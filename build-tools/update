@@ -150,7 +150,7 @@ function updateURL(a, b, c, d) {
 }
 
 function writeFiles(indexContents, preactIndexContents, crossprotocolContents, replayEmbedContents) {
-	fs.writeFileSync('index.html', indexContents);
+	//fs.writeFileSync('index.html', indexContents);
 	fs.writeFileSync('preactalpha.html', preactIndexContents);
 	fs.writeFileSync('crossprotocol.html', crossprotocolContents);
 	fs.writeFileSync('js/replay-embed.js', replayEmbedContents);

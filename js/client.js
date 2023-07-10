@@ -220,6 +220,7 @@ function toId() {
 			if (Config.testclient) {
 				ret = 'https://' + Config.routes.client + ret;
 			}
+			var ret = 'https://play.pokemonshowdown.com/~~' + Config.server.id + '/action.php';
 			return (this.getActionPHP = function () {
 				return ret;
 			})();
