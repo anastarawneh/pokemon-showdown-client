@@ -1498,6 +1498,7 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 		let lsetTable = BattleTeambuilderTable;
 		if (this.formatType?.startsWith('bdsp')) lsetTable = lsetTable['gen8bdsp'];
 		if (this.formatType === 'letsgo') lsetTable = lsetTable['gen7letsgo'];
+		if (this.formatType === 'elesalocke') lsetTable = lsetTable['gen5elesalocke'];
 		if (this.formatType?.startsWith('dlc1')) lsetTable = lsetTable['gen8dlc1'];
 		while (learnsetid) {
 			let learnset = lsetTable.learnsets[learnsetid];

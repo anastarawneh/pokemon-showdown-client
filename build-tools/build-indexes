@@ -524,6 +524,7 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			BattleTeambuilderTable['gen5elesalocke'].items = items;
 			BattleTeambuilderTable['gen5elesalocke'].overrideTier = overrideTier;
 			BattleTeambuilderTable['gen5elesalocke'].formatSlices = formatSlices;
+			BattleTeambuilderTable['gen5elesalocke'].learnsets = {};
 
 		} else if (gen === 'gen9') {
 			BattleTeambuilderTable.tiers = tiers;
@@ -933,6 +934,16 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 		BattleTeambuilderTable['gen8bdsp'].learnsets[id] = {};
 		for (const moveid in learnset) {
 			BattleTeambuilderTable['gen8bdsp'].learnsets[id][moveid] = '8g';
+		}
+	}
+	const ElesalockeLearnsets = Dex.mod('gen5elesalocke').data.Learnsets;
+	for (const id in ElesalockeLearnsets) {
+		const species = Dex.mod('gen5elesalocke').species.get(id);
+		if (species.isNonstandard && !['Unobtainable', 'CAP'].includes(species.isNonstandard)) continue;
+		const learnset = ElesalockeLearnsets[id].learnset;
+		BattleTeambuilderTable['gen5elesalocke'].learnsets[id] = {};
+		for (const moveid in learnset) {
+			BattleTeambuilderTable['gen5elesalocke'].learnsets[id][moveid] = '8g';
 		}
 	}
 	const DLC1Learnsets = Dex.mod('gen8dlc1').data.Learnsets;
