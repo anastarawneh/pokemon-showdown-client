@@ -836,12 +836,12 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 				}
 			}
 		}
-		items.push(...greatItems);
+		if (!isElesalocke) items.push(...greatItems);
 		items.push(...goodItems);
 		items.push(...specificItems);
-		items.push(...poorItems);
-		items.push(...badItems);
-		items.push(...unreleasedItems);
+		if (!isElesalocke) items.push(...poorItems);
+		if (!isElesalocke) items.push(...badItems);
+		if (!isElesalocke) items.push(...unreleasedItems);
 	}
 
 	//
