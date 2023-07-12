@@ -942,9 +942,8 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 		if (species.isNonstandard && !['Unobtainable', 'CAP'].includes(species.isNonstandard)) continue;
 		const learnset = ElesalockeLearnsets[id].learnset;
 		BattleTeambuilderTable['gen5elesalocke'].learnsets[id] = {};
-		console.log(learnset);
 		for (const moveid in learnset) {
-			BattleTeambuilderTable['gen5elesalocke'].learnsets[id][moveid] = '5';
+			if (!learnset[moveid].includes("N")) BattleTeambuilderTable['gen5elesalocke'].learnsets[id][moveid] = '5';
 		}
 	}
 	const DLC1Learnsets = Dex.mod('gen8dlc1').data.Learnsets;
