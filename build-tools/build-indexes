@@ -609,6 +609,10 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 				continue;
 			}
 			if (item.isNonstandard && !isMetBattle) {
+				if (isElesalocke) {
+					console.log(item.name);
+					console.log(item.isNonstandard);
+				}
 				if (isNatDex) {
 					if (item.isNonstandard !== "Past") continue;
 					if (!item.itemUser && !item.zMove) continue;
