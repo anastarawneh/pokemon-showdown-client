@@ -943,7 +943,7 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 		const learnset = ElesalockeLearnsets[id].learnset;
 		BattleTeambuilderTable['gen5elesalocke'].learnsets[id] = {};
 		for (const moveid in learnset) {
-			BattleTeambuilderTable['gen5elesalocke'].learnsets[id][moveid] = '8g';
+			BattleTeambuilderTable['gen5elesalocke'].learnsets[id][moveid] = '5';
 		}
 	}
 	const DLC1Learnsets = Dex.mod('gen8dlc1').data.Learnsets;
