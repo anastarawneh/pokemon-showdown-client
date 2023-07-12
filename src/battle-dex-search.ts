@@ -1613,7 +1613,7 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 		let uselessMoves: SearchRow[] = [];
 		for (const id of moves) {
 			const isUsable = this.moveIsNotUseless(id as ID, species, moves, this.set);
-			if (isUsable) {
+			if (isUsable || this.formatType === 'elesalocke') {
 				if (!usableMoves.length) usableMoves.push(['header', "Moves"]);
 				usableMoves.push(['move', id as ID]);
 			} else {
