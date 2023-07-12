@@ -522,6 +522,7 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			BattleTeambuilderTable['gen5elesalocke'] = {};
 			BattleTeambuilderTable['gen5elesalocke'].tiers = tiers;
 			BattleTeambuilderTable['gen5elesalocke'].items = items;
+			// TEST
 			BattleTeambuilderTable['gen5elesalocke'].overrideTier = overrideTier;
 			BattleTeambuilderTable['gen5elesalocke'].formatSlices = formatSlices;
 
