@@ -1395,6 +1395,7 @@ function toId() {
 				password: data.password || '',
 				id: id
 			}, function (data) {
+				console.log('https://' + Config.routes.client + '/~~' + Config.server.id + '/action.php');
 				if (silent) return;
 				var sData = data.split(':');
 				if (sData[0] === 'success') {
