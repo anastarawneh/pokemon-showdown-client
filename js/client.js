@@ -1388,6 +1388,7 @@ function toId() {
 			var serverid = Config.server.id && toID(Config.server.id.split(':')[0]);
 			var silent = data.silent;
 			if (serverid && serverid !== 'showdown') id = serverid + '-' + id;
+			console.log('https://' + Config.routes.client + '/~~' + Config.server.id + '/action.php');
 			$.post('https://' + Config.routes.client + '/~~' + Config.server.id + '/action.php', {
 				act: 'uploadreplay',
 				log: data.log,
@@ -1395,7 +1396,6 @@ function toId() {
 				password: data.password || '',
 				id: id
 			}, function (data) {
-				console.log('https://' + Config.routes.client + '/~~' + Config.server.id + '/action.php');
 				if (silent) return;
 				var sData = data.split(':');
 				if (sData[0] === 'success') {
