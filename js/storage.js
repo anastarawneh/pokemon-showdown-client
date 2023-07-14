@@ -505,7 +505,6 @@ Storage.postCrossOriginMessage = function (data) {
 
 Storage.initTestClient = function () {
 	Config.server = Config.server || Config.defaultserver;
-	console.log(Config.server);
 	Storage.whenTeamsLoaded.load();
 
 	var sid = null;

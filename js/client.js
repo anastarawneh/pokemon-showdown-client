@@ -1388,7 +1388,7 @@ function toId() {
 			var serverid = Config.server.id && toID(Config.server.id.split(':')[0]);
 			var silent = data.silent;
 			if (serverid && serverid !== 'showdown') id = serverid + '-' + id;
-			console.log(id);
+			console.log(serverid);
 			$.post('http://' + Config.routes.client + '/action.php', {
 				act: 'uploadreplay',
 				log: data.log,
