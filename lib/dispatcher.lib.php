@@ -446,6 +446,7 @@ class DefaultActionHandler {
 			return;
 		}
 
+		$server['id'] = 'anastarawneh';
 		if ($server['id'] !== 'showdown') {
 			$reqData['id'] = $server['id'].'-'.$reqData['id'];
 		}
