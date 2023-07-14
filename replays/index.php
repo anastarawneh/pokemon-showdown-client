@@ -95,8 +95,6 @@ $panels->start();
 				<small><br />Round 1</small>
 			</a></li>
 		</ul>
-		<h1>Recent replays</h1>
-		<ul class="linklist" style="max-width:480px;margin:0 auto;text-align:center">
 <?php
 
 // $replays = [];
@@ -113,7 +111,6 @@ if (!$Replays->db) {
 }
 
 ?>
-		</ul>
 	</div></div>
 
 <?php
