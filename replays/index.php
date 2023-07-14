@@ -34,7 +34,18 @@ $panels->start();
 		</form>
 		<h1>Featured replays</h1>
 		<ul class="linklist" style="max-width:480px;margin:0 auto;text-align:center">
-			<h3>Finals</h3>
+			<h3>The Race to Wattson</h3>
+			<li><a href="https://replay.pokemonshowdown.com/gen3ubers-1900050068" target="_blank">
+				<small>[gen3ubers]<br /></small>
+				<strong>Generic_Personname</strong> vs. <strong>HopRockets</strong>
+				<small><br />Semifinals</small>
+			</a></li>
+			<li><a href="https://replay.pokemonshowdown.com/gen3ubers-1900777050" target="_blank">
+				<small>[gen3ubers]<br /></small>
+				<strong>anastarawneh</strong> vs. <strong>KemicalGUNNA</strong>
+				<small><br />Semifinals</small>
+			</a></li>
+			<br>
 			<li><a href="https://replay.pokemonshowdown.com/gen3ubers-1900784521" target="_blank">
 				<small>[gen3ubers]<br /></small>
 				<strong>anastarawneh</strong> vs. <strong>Generic_Personname</strong>
