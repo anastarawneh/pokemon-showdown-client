@@ -425,6 +425,8 @@ class DefaultActionHandler {
 			return;
 		}
 		if (
+				// the server must be registered
+				// !$server ||
 				// the server must send all the required values
 				!isset($reqData['id']) ||
 				!isset($reqData['format']) ||
