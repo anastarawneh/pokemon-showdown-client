@@ -103,6 +103,8 @@ class ActionDispatcher {
 		$serverid = @$this->reqData['serverid'];
 		$server = null;
 		$ip = $this->getIp();
+		error_log($serverid);
+		error_log(isset($PokemonServers[$serverid]));
 		if (!isset($PokemonServers[$serverid])) {
 			// Try to find the server by source IP, rather than by serverid.
 			if ($serverid === 'testtimeout') {
