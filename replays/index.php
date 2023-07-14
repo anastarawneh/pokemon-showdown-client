@@ -51,44 +51,45 @@ $panels->start();
 				<strong>anastarawneh</strong> vs. <strong>KemicalGUNNA</strong>
 				<small><br />Semifinals</small>
 			</a></li>
-			<br>
-			<li><a href="https://replay.pokemonshowdown.com/gen3ubers-1899448546" target="_blank">
+			<li><button class="button" onclick="$('.older1').show();$(this).parent().hide()">Older</button></li>
+			<br class="older1" style="display:none">
+			<li class="older1" style="display:none"><a href="https://replay.pokemonshowdown.com/gen3ubers-1899448546" target="_blank">
 				<small>[gen3ubers]<br /></small>
 				<strong>ThePsyBenji</strong> vs. <strong>Generic_Personname</strong>
 				<small><br />Round 2</small>
 			</a></li>
-			<li><a href="https://replay.pokemonshowdown.com/gen3ubers-1899027237" target="_blank">
+			<li class="older1" style="display:none"><a href="https://replay.pokemonshowdown.com/gen3ubers-1899027237" target="_blank">
 				<small>[gen3ubers]<br /></small>
 				<strong>skinsmith</strong> vs. <strong>HopRockets</strong>
 				<small><br />Round 2</small>
 			</a></li>
-			<li><a href="https://replay.pokemonshowdown.com/gen3ubers-1899511020" target="_blank">
+			<li class="older1" style="display:none"><a href="https://replay.pokemonshowdown.com/gen3ubers-1899511020" target="_blank">
 				<small>[gen3ubers]<br /></small>
 				<strong>anastarawneh</strong> vs. <strong>GenlockeGene</strong>
 				<small><br />Round 2</small>
 			</a></li>
-			<li><a href="https://replay.pokemonshowdown.com/gen3customgame-1899579025" target="_blank">
+			<li class="older1" style="display:none"><a href="https://replay.pokemonshowdown.com/gen3customgame-1899579025" target="_blank">
 				<small>[gen3customgame]<br /></small>
 				<strong>jumbolax</strong> vs. <strong>KemicalGUNNA</strong>
 				<small><br />Round 2</small>
 			</a></li>
-			<br>
-			<li><a href="https://replay.pokemonshowdown.com/gen3ubers-1899419394" target="_blank">
+			<br class="older1" style="display:none">
+			<li class="older1" style="display:none"><a href="https://replay.pokemonshowdown.com/gen3ubers-1899419394" target="_blank">
 				<small>[gen3ubers]<br /></small>
 				<strong>Generic_Personname</strong> vs. <strong>Blytheru</strong>
 				<small><br />Round 1</small>
 			</a></li>
-			<li><a href="https://replay.pokemonshowdown.com/gen3ubers-1898849071" target="_blank">
+			<li class="older1" style="display:none"><a href="https://replay.pokemonshowdown.com/gen3ubers-1898849071" target="_blank">
 				<small>[gen3ubers]<br /></small>
 				<strong>bugpilled</strong> vs. <strong>HopRockets</strong>
 				<small><br />Round 1</small>
 			</a></li>
-			<li><a href="https://replay.pokemonshowdown.com/gen3ubers-1899490893" target="_blank">
+			<li class="older1" style="display:none"><a href="https://replay.pokemonshowdown.com/gen3ubers-1899490893" target="_blank">
 				<small>[gen3ubers]<br /></small>
 				<strong>clovebloom</strong> vs. <strong>anastarawneh</strong>
 				<small><br />Round 1</small>
 			</a></li>
-			<li><a href="https://replay.pokemonshowdown.com/gen3ubers-1899046239" target="_blank">
+			<li class="older1" style="display:none"><a href="https://replay.pokemonshowdown.com/gen3ubers-1899046239" target="_blank">
 				<small>[gen3ubers]<br /></small>
 				<strong>jumbolax</strong> vs. <strong>MrFigs</strong>
 				<small><br />Round 1</small>
