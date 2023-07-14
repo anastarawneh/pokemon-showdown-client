@@ -35,7 +35,7 @@ $panels->start();
 		<h1>Featured replays</h1>
 		<ul class="linklist" style="max-width:480px;margin:0 auto;text-align:center">
 			<h3>Fun</h3>
-			<li><a href="/oumonotype-82345404" data-target="push">
+			<li><a href="https://replay.pokemonshowdown.com/oumonotype-82345404" data-target="push">
 				<small>[oumonotype]<br /></small>
 				<strong>kdarewolf</strong> vs. <strong>Onox</strong>
 				<small><br />Protean + prediction</small>
