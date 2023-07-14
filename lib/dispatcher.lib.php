@@ -420,10 +420,10 @@ class DefaultActionHandler {
 		// include_once dirname(__FILE__) . '/ntbb-ladder.lib.php'; // not clear if this is needed
 
 		$server = $dispatcher->findServer();
-		if (!$server) {
-			$out['errorip'] = $dispatcher->getIp();
-			return;
-		}
+		// if (!$server) {
+		// 	$out['errorip'] = $dispatcher->getIp();
+		// 	return;
+		// }
 		if (
 				// the server must be registered
 				// !$server ||
