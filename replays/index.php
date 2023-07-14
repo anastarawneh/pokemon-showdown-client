@@ -34,8 +34,14 @@ $panels->start();
 		</form>
 		<h1>Featured replays</h1>
 		<ul class="linklist" style="max-width:480px;margin:0 auto;text-align:center">
+			<h3>Finals</h3>
+			<li><a href="https://replay.pokemonshowdown.com/gen3ubers-1900784521" target="_blank">
+				<small>[gen3ubers]<br /></small>
+				<strong>anastarawneh</strong> vs. <strong>Generic_Personname</strong>
+				<small><br />Finals</small>
+			</a></li>
 			<h3>Fun</h3>
-			<li><a href="https://replay.pokemonshowdown.com/oumonotype-82345404" data-target="push">
+			<li><a href="/oumonotype-82345404" data-target="push">
 				<small>[oumonotype]<br /></small>
 				<strong>kdarewolf</strong> vs. <strong>Onox</strong>
 				<small><br />Protean + prediction</small>
