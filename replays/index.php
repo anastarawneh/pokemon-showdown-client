@@ -34,6 +34,71 @@ $panels->start();
 		</form>
 		<h1>Featured replays</h1>
 		<ul class="linklist" style="max-width:480px;margin:0 auto;text-align:center">
+			<h3>The Race to Elesa</h3>
+			<li><a href="https://replay.pokemonshowdown.com/gen5ubers-1908296336" target="_blank">
+				<small>[gen5ubers]<br /></small>
+				<strong>Generic_Personname</strong> vs. <strong>jumbolax</strong>
+				<small><br />Semifinals</small>
+			</a></li>
+			<li><a href="https://replay.pokemonshowdown.com/gen5ubers-1908483707" target="_blank">
+				<small>[gen5ubers]<br /></small>
+				<strong>skinsmith</strong> vs. <strong>Quxelopqr</strong>
+				<small><br />Semifinals</small>
+			</a></li>
+			<li><button class="button" onclick="$('.older2').show();$(this).parent().hide()">Older</button></li>
+			<br class="older2" style="display:none">
+			<li class="older2" style="display:none"><a href="https://replay.pokemonshowdown.com/gen5ubers-1907880173" target="_blank">
+				<small>[gen5ubers]<br /></small>
+				<strong>KemicalGUNNA</strong> vs. <strong>jumbolax</strong>
+				<small><br />Round 2</small>
+			</a></li>
+			<li class="older2" style="display:none"><a href="https://replay.pokemonshowdown.com/gen5ubers-1906925353" target="_blank">
+				<small>[gen5ubers]<br /></small>
+				<strong>Generic_Personname</strong> vs. <strong>anastarawneh</strong>
+				<small><br />Round 2</small>
+			</a></li>
+			<li class="older2" style="display:none"><a href="https://replay.pokemonshowdown.com/gen5ubers-1908303427" target="_blank">
+				<small>[gen5ubers]<br /></small>
+				<strong>bugpilled</strong> vs. <strong>Quxelopqr</strong>
+				<small><br />Round 2</small>
+			</a></li>
+			<li class="older2" style="display:none"><a href="https://replay.pokemonshowdown.com/gen5ubers-1907681497" target="_blank">
+				<small>[gen5ubers]<br /></small>
+				<strong>RestEasyFellow</strong> vs. <strong>skinsmith</strong>
+				<small><br />Round 2</small>
+			</a></li>
+			<br class="older2" style="display:none">
+			<li class="older2" style="display:none"><a href="https://replay.pokemonshowdown.com/gen5ubers-1907714351" target="_blank">
+				<small>[gen5ubers]<br /></small>
+				<strong>clovebloom</strong> vs. <strong>jumbolax</strong>
+				<small><br />Round 1</small>
+			</a></li>
+			<li class="older2" style="display:none"><a href="https://replay.pokemonshowdown.com/gen5ubers-1906303411" target="_blank">
+				<small>[gen5ubers]<br /></small>
+				<strong>anastarawneh</strong> vs. <strong>HopRockets</strong>
+				<small><br />Round 1</small>
+			</a></li>
+			<li class="older2" style="display:none"><a href="https://replay.pokemonshowdown.com/gen5ubers-1904997173" target="_blank">
+				<small>[gen5ubers]<br /></small>
+				<strong>GenlockeGene</strong> vs. <strong>Generic_Personname</strong>
+				<small><br />Round 1</small>
+			</a></li>
+			<li class="older2" style="display:none"><a href="https://replay.pokemonshowdown.com/gen5ubers-1907346934" target="_blank">
+				<small>[gen5ubers]<br /></small>
+				<strong>bugpilled</strong> vs. <strong>Garrapto</strong>
+				<small><br />Round 1</small>
+			</a></li>
+			<li class="older2" style="display:none"><a href="https://replay.pokemonshowdown.com/gen5ubers-1906616355" target="_blank">
+				<small>[gen5ubers]<br /></small>
+				<strong>skinsmith</strong> vs. <strong>MrFigs</strong>
+				<small><br />Round 1</small>
+			</a></li>
+			<li class="older2" style="display:none"><a href="https://replay.pokemonshowdown.com/gen5ubers-1907620718" target="_blank">
+				<small>[gen5ubers]<br /></small>
+				<strong>ThePsyBenji</strong> vs. <strong>RestEasyFellow</strong>
+				<small><br />Round 1</small>
+			</a></li>
+
 			<h3>The Race to Wattson</h3>
 			<li><a href="https://replay.pokemonshowdown.com/gen3ubers-1900784521" target="_blank">
 				<small>[gen3ubers]<br /></small>
