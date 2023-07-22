@@ -35,6 +35,12 @@ $panels->start();
 		<h1>Featured replays</h1>
 		<ul class="linklist" style="max-width:480px;margin:0 auto;text-align:center">
 			<h3>The Race to Elesa</h3>
+			<li><a href="https://replay.pokemonshowdown.com/gen5ubers-1908720710" target="_blank">
+				<small>[gen5ubers]<br /></small>
+				<strong>Quxelopqr</strong> vs. <strong>Generic_Personname</strong>
+				<small><br />Finals</small>
+			</a></li>
+			<br>
 			<li><a href="https://replay.pokemonshowdown.com/gen5ubers-1908296336" target="_blank">
 				<small>[gen5ubers]<br /></small>
 				<strong>Generic_Personname</strong> vs. <strong>jumbolax</strong>
