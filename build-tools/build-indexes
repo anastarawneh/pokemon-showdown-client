@@ -338,6 +338,7 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 		const isVGC = ('' + genIdent).endsWith('.5');
 
 		const isElesalocke = (genIdent === 5.01);
+		const isGrantlocke = (genIdent === 6.01);
 
 		const genNum = Math.floor(isDoubles ? -genIdent : genIdent);
 		const gen = (() => {
@@ -348,6 +349,7 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			if (isStadium) genStr += 'stadium' + (genNum > 1 ? genNum : '');
 
 			if (isElesalocke) genStr += 'elesalocke';
+			if (isGrantlocke) genStr += 'grantlocke';
 
 			return genStr;
 		})();
@@ -526,6 +528,14 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			BattleTeambuilderTable['gen5elesalocke'].formatSlices = formatSlices;
 			BattleTeambuilderTable['gen5elesalocke'].learnsets = {};
 
+		} else if (isGrantlocke) {
+			BattleTeambuilderTable['gen6grantlocke'] = {};
+			BattleTeambuilderTable['gen6grantlocke'].tiers = tiers;
+			BattleTeambuilderTable['gen6grantlocke'].items = items;
+			BattleTeambuilderTable['gen6grantlocke'].overrideTier = overrideTier;
+			BattleTeambuilderTable['gen6grantlocke'].formatSlices = formatSlices;
+			BattleTeambuilderTable['gen6grantlocke'].learnsets = {};
+
 		} else if (gen === 'gen9') {
 			BattleTeambuilderTable.tiers = tiers;
 			BattleTeambuilderTable.items = items;
@@ -621,7 +631,7 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 				const banlist = Dex.formats.getRuleTable(Dex.formats.get(gen + 'metronomebattle'));
 				if (banlist.isBanned('item:' + item.id)) continue;
 			}
-			if (gen !== 'gen5elesalocke') switch (id) {
+			if (gen !== 'gen5elesalocke' && gen !== 'gen6grantlocke') switch (id) {
 			case 'leftovers':
 			case 'lifeorb':
 			case 'choiceband':
@@ -837,12 +847,12 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 				}
 			}
 		}
-		if (!isElesalocke) items.push(...greatItems);
+		if (!isElesalocke && !isGrantlocke) items.push(...greatItems);
 		items.push(...goodItems);
 		items.push(...specificItems);
-		if (!isElesalocke) items.push(...poorItems);
-		if (!isElesalocke) items.push(...badItems);
-		if (!isElesalocke) items.push(...unreleasedItems);
+		if (!isElesalocke && !isGrantlocke) items.push(...poorItems);
+		if (!isElesalocke && !isGrantlocke) items.push(...badItems);
+		if (!isElesalocke && !isGrantlocke) items.push(...unreleasedItems);
 	}
 
 	//
@@ -944,6 +954,16 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 		BattleTeambuilderTable['gen5elesalocke'].learnsets[id] = {};
 		for (const moveid in learnset) {
 			if (!learnset[moveid].includes("N")) BattleTeambuilderTable['gen5elesalocke'].learnsets[id][moveid] = '5';
+		}
+	}
+	const GrantlockeLearnsets = Dex.mod('gen6grantlocke').data.Learnsets;
+	for (const id in GrantlockeLearnsets) {
+		const species = Dex.mod('gen6grantlocke').species.get(id);
+		if (species.isNonstandard && !['Unobtainable', 'CAP'].includes(species.isNonstandard)) continue;
+		const learnset = GrantlockeLearnsets[id].learnset;
+		BattleTeambuilderTable['gen6grantlocke'].learnsets[id] = {};
+		for (const moveid in learnset) {
+			if (!learnset[moveid].includes("N")) BattleTeambuilderTable['gen6grantlocke'].learnsets[id][moveid] = '6';
 		}
 	}
 	const DLC1Learnsets = Dex.mod('gen8dlc1').data.Learnsets;
@@ -1078,7 +1098,7 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 	// Mods
 	//
 
-	for (const mod of ['gen7letsgo', 'gen8bdsp', 'gen5elesalocke']) {
+	for (const mod of ['gen7letsgo', 'gen8bdsp', 'gen5elesalocke', 'gen6grantlocke']) {
 		const modDex = Dex.mod(mod);
 		const modData = modDex.data;
 		const parentDex = Dex.forGen(modDex.gen);

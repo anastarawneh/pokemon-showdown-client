@@ -551,7 +551,7 @@ abstract class BattleTypedSearch<T extends SearchType> {
 	set: PokemonSet | null = null;
 
 	protected formatType: 'doubles' | 'bdsp' | 'bdspdoubles' | 'letsgo' | 'metronome' | 'natdex' | 'nfe' |
-	'dlc1' | 'dlc1doubles' | 'stadium' | 'lc' | 'elesalocke' | null = null;
+	'dlc1' | 'dlc1doubles' | 'stadium' | 'lc' | 'elesalocke' | 'grantlocke' | null = null;
 
 	/**
 	 * Cached copy of what the results list would be with only base filters
@@ -635,6 +635,11 @@ abstract class BattleTypedSearch<T extends SearchType> {
 
 		if (format.includes('elesalocke')) {
 			this.formatType = 'elesalocke';
+			format = 'nuzlocke' as ID;
+		}
+
+		if (format.includes('grantlocke')) {
+			this.formatType = 'grantlocke';
 			format = 'nuzlocke' as ID;
 		}
 
@@ -806,6 +811,7 @@ abstract class BattleTypedSearch<T extends SearchType> {
 			this.formatType === 'bdspdoubles' ? 'gen8bdspdoubles' :
 
 			this.formatType === 'elesalocke' ? 'gen5elesalocke' :
+			this.formatType === 'grantlocke' ? 'gen6grantlocke' :
 
 			this.formatType === 'nfe' ? `gen${gen}nfe` :
 			this.formatType === 'lc' ? `gen${gen}lc` :
@@ -920,6 +926,8 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 			table = table['gen7letsgo'];
 		} else if (this.formatType === 'elesalocke') {
 			table = table['gen5elesalocke'];
+		} else if (this.formatType === 'grantlocke') {
+			table = table['gen6grantlocke'];
 		} else if (this.formatType === 'natdex') {
 			table = table['gen' + this.dex.gen + 'natdex'];
 		} else if (this.formatType === 'metronome') {
@@ -979,7 +987,7 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 		else if (format === 'doublesnu') tierSet = tierSet.slice(slices.DNU || slices.DUU);
 		else if (this.formatType?.startsWith('bdsp') || this.formatType === 'letsgo' || this.formatType === 'stadium') {
 			tierSet = tierSet.slice(slices.Uber);
-		} else if (this.formatType === 'elesalocke') {
+		} else if (this.formatType === 'elesalocke' || this.formatType === 'grantlocke') {
 			tierSet = tierSet.slice(slices.Legal);
 		} else if (!isDoublesOrBS) {
 			tierSet = [
@@ -1170,6 +1178,8 @@ class BattleItemSearch extends BattleTypedSearch<'item'> {
 			table = table['gen8bdsp'];
 		} else if (this.formatType === 'elesalocke') {
 			table = table['gen5elesalocke'];
+		} else if (this.formatType === 'grantlocke') {
+			table = table['gen6grantlocke'];
 		} else if (this.formatType === 'natdex') {
 			table = table['gen' + this.dex.gen + 'natdex'];
 		} else if (this.formatType === 'metronome') {
@@ -1499,6 +1509,7 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 		if (this.formatType?.startsWith('bdsp')) lsetTable = lsetTable['gen8bdsp'];
 		if (this.formatType === 'letsgo') lsetTable = lsetTable['gen7letsgo'];
 		if (this.formatType === 'elesalocke') lsetTable = lsetTable['gen5elesalocke'];
+		if (this.formatType === 'grantlocke') lsetTable = lsetTable['gen6grantlocke'];
 		if (this.formatType?.startsWith('dlc1')) lsetTable = lsetTable['gen8dlc1'];
 		while (learnsetid) {
 			let learnset = lsetTable.learnsets[learnsetid];
@@ -1613,7 +1624,7 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 		let uselessMoves: SearchRow[] = [];
 		for (const id of moves) {
 			const isUsable = this.moveIsNotUseless(id as ID, species, moves, this.set);
-			if (isUsable || this.formatType === 'elesalocke') {
+			if (isUsable || this.formatType === 'elesalocke' || this.formatType === 'grantlocke') {
 				if (!usableMoves.length) usableMoves.push(['header', "Moves"]);
 				usableMoves.push(['move', id as ID]);
 			} else {
