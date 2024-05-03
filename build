@@ -66,6 +66,12 @@ default:
 
 execSync(`node ./build-tools/update` + full, options);
 
+console.log('Writing config to play.pokemonshowdown.com/config/config.js...')
+fs.writeFileSync(
+	'play.pokemonshowdown.com/config/config.js',
+	fs.readFileSync('config/config.js')
+);
+
 if (full) {
 	try {
 		fs.statSync('./replays/build');
