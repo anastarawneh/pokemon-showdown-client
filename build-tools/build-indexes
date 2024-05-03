@@ -9,7 +9,7 @@ const rootDir = path.resolve(__dirname, '..');
 process.chdir(rootDir);
 
 if (!fs.existsSync('caches/pokemon-showdown')) {
-	child_process.execSync('git clone ../../server pokemon-showdown', {
+	child_process.execSync('git clone -b fakemons ../../server pokemon-showdown', {
 		cwd: 'caches',
 	});
 }
