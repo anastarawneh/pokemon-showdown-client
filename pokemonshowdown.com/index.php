@@ -10,7 +10,7 @@
 <?php
 include_once __DIR__ . '/../config/config.inc.php';
 include_once __DIR__ . '/../config/ads-landing.inc.php';
-//@insertAtHead();
+/*@insertAtHead();*/
 ?>
 
 <style>
@@ -96,7 +96,7 @@ include_once __DIR__ . '/../config/ads-landing.inc.php';
 	</header>
 
 	<div class="main">
-		<div class="main-spacer"><?php @insertAboveIntro(); ?></div>
+		<div class="main-spacer"><?php /*@insertAboveIntro();*/ ?></div>
 
 		<section class="section" style="max-width: 850px">
 			<div class="left">
@@ -250,7 +250,7 @@ if (BrowserDetect.OS === 'Mac') {
 
 			<div class="under-main" style="clear:both;padding-top:1px">
 
-				<div class="main-spacer"><?php @insertBelowIntro(); ?></div>
+				<div class="main-spacer"><?php /*@insertBelowIntro();*/ ?></div>
 				<div style="clear:both;padding-top:1px"></div>
 			</div>
 		</section>
@@ -364,7 +364,7 @@ foreach ($latestNewsCache as $topic_id) {
 <?php
 	if (++$count >= 2) break;
 	if ($count === 1) {
-		@insertBetweenNews();
+		/*@insertBetweenNews();*/
 	}
 }
 
@@ -382,4 +382,4 @@ foreach ($latestNewsCache as $topic_id) {
 	</p>
 </footer>
 
-<?php @insertAtEnd(); ?>
+<?php /*@insertAtEnd();*/ ?>
