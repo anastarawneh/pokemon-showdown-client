@@ -10,7 +10,7 @@
 <?php
 include_once __DIR__ . '/../config/config.inc.php';
 include_once __DIR__ . '/../config/ads-landing.inc.php';
-@insertAtHead();
+//@insertAtHead();
 ?>
 
 <style>
