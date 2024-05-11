@@ -36341,3 +36341,5 @@ BattleMoveAnims['murkchuck'] = {anim: BattleMoveAnims['sludgebomb'].anim};
 BattleMoveAnims['burningslash'] = {anim: BattleOtherAnims.slashattack.anim};
 BattleMoveAnims['entomb'] = {anim: BattleMoveAnims['curse'].anim};
 BattleMoveAnims['pistonpunch'] = {anim: BattleMoveAnims['machpunch'].anim};
+BattleMoveAnims['purifyingflame'] = {anim: BattleMoveAnims['flamethrower'].anim};
+BattleMoveAnims['barrelswig'] = {anim: BattleOtherAnims.consume.anim};
