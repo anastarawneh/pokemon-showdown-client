@@ -110,20 +110,6 @@ https://replay.pokemonshowdown.com/gen7randomdoublesbattle-865046831.log
 <link rel="stylesheet" href="//play.pokemonshowdown.com/style/battle.css?a7" />
 <link rel="stylesheet" href="//play.pokemonshowdown.com/style/utilichart.css?a7" />
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-26211653-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-26211653-1');
-</script>
-<!-- End Google Analytics -->
-<!-- Venatus Ad Manager - Install in <HEAD> of page -->
-	<script src="https://hb.vntsm.com/v3/live/ad-manager.min.js" type="text/javascript" data-site-id="642aba63ec9a7b11c3c9c1be" data-mode="scan" async></script>
-<!-- / Venatus Ad Manager -->
-
 <style>
 	@media (max-width:820px) {
 		.battle {
@@ -225,7 +211,7 @@ https://replay.pokemonshowdown.com/gen7randomdoublesbattle-865046831.log
 
 	<header>
 		<div class="nav-wrapper"><ul class="nav">
-			<li><a class="button nav-first" href="//pokemonshowdown.com/"><img src="//pokemonshowdown.com/images/pokemonshowdownbeta.png" srcset="//pokemonshowdown.com/images/pokemonshowdownbeta.png 1x, //pokemonshowdown.com/images/pokemonshowdownbeta@2x.png 2x" alt="Pok&eacute;mon Showdown" width="146" height="44" /> Home</a></li>
+			<li><a class="button nav-first" href="//pokemonshowdown.com/"><img src="//play.pokemonshowdown.com/pokemonshowdownbeta.png" srcset="//play.pokemonshowdown.com/pokemonshowdownbeta.png 1x, //play.pokemonshowdown.com/pokemonshowdownbeta@2x.png 2x" alt="Pok&eacute;mon Showdown" width="146" height="44" /> Home</a></li>
 			<li><a class="button" href="//pokemonshowdown.com/dex/">Pok&eacute;dex</a></li>
 			<li><a class="button cur" href="/">Replays</a></li>
 			<li><a class="button" href="//pokemonshowdown.com/ladder/">Ladder</a></li>
