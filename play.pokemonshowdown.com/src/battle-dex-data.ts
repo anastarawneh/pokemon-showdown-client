@@ -1243,6 +1243,8 @@ class Move implements Effect {
 	readonly noSketch: boolean;
 	readonly num: number;
 
+	readonly replacedBy?: string;
+
 	constructor(id: ID, name: string, data: any) {
 		if (!data || typeof data !== 'object') data = {};
 		if (data.name) name = data.name;
@@ -1278,6 +1280,8 @@ class Move implements Effect {
 		this.status = data.status || '';
 		this.secondaries = data.secondaries || (data.secondary ? [data.secondary] : null);
 		this.noSketch = !!data.noSketch;
+
+		this.replacedBy = data.replacedBy || null;
 
 		this.isMax = data.isMax || false;
 		this.maxMove = data.maxMove || {basePower: 0};
@@ -1353,7 +1357,7 @@ class Move implements Effect {
 
 		this.num = data.num || 0;
 		if (!this.gen) {
-			if (this.num >= 743) {
+			/*if (this.num >= 743) {
 				this.gen = 8;
 			} else if (this.num >= 622) {
 				this.gen = 7;
@@ -1363,7 +1367,7 @@ class Move implements Effect {
 				this.gen = 5;
 			} else if (this.num >= 355) {
 				this.gen = 4;
-			} else if (this.num >= 252) {
+			} else */if (this.num >= 252) {
 				this.gen = 3;
 			} else if (this.num >= 166) {
 				this.gen = 2;
@@ -1498,6 +1502,9 @@ class Species implements Effect {
 	readonly unreleasedHidden: boolean | 'Past';
 	readonly changesFrom: string | undefined;
 
+	readonly catchRate: number | undefined;
+	readonly heldItems: string[] | undefined;
+
 	constructor(id: ID, name: string, data: any) {
 		if (!data || typeof data !== 'object') data = {};
 		if (data.name) name = data.name;
@@ -1552,6 +1559,9 @@ class Species implements Effect {
 		this.isNonstandard = data.isNonstandard || null;
 		this.unreleasedHidden = data.unreleasedHidden || false;
 		this.changesFrom = data.changesFrom || undefined;
+
+		this.catchRate = data.catchRate || undefined;
+		this.heldItems = data.heldItems || undefined;
 		if (!this.gen) {
 			if (this.num >= 906 || this.formeid.startsWith('-paldea')) {
 				this.gen = 9;

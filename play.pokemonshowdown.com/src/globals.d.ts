@@ -9,6 +9,7 @@ declare var BattleAliases: any;
 declare var BattleStatuses: any;
 declare var BattlePokemonSprites: any;
 declare var BattlePokemonSpritesBW: any;
+declare var BattleLocationDex: any;
 
 // PS globals
 /////////////

@@ -12,7 +12,7 @@
  */
 
 type SearchType = (
-	'pokemon' | 'type' | 'tier' | 'move' | 'item' | 'ability' | 'egggroup' | 'category' | 'article'
+	'pokemon' | 'type' | 'tier' | 'move' | 'item' | 'ability' | 'egggroup' | 'category' | 'article' | 'location'
 );
 
 type SearchRow = (
@@ -52,6 +52,7 @@ class DexSearch {
 		egggroup: 7,
 		category: 8,
 		article: 9,
+		location: 10,
 	};
 	static typeName = {
 		pokemon: 'Pok&eacute;mon',
@@ -63,6 +64,7 @@ class DexSearch {
 		egggroup: 'Egg group',
 		category: 'Category',
 		article: 'Article',
+		location: 'Location',
 	};
 	firstPokemonColumn: 'Tier' | 'Number' = 'Number';
 
@@ -93,6 +95,7 @@ class DexSearch {
 		case 'ability': return new BattleAbilitySearch('ability', format, speciesOrSet);
 		case 'type': return new BattleTypeSearch('type', format, speciesOrSet);
 		case 'category': return new BattleCategorySearch('category', format, speciesOrSet);
+		case 'location': return new BattleLocationSearch('location', format, speciesOrSet);
 		}
 		return null;
 	}
@@ -297,7 +300,7 @@ class DexSearch {
 
 		// Notes:
 		// - if we have a searchType, that searchType's buffer will be on top
-		let bufs: SearchRow[][] = [[], [], [], [], [], [], [], [], [], []];
+		let bufs: SearchRow[][] = [[], [], [], [], [], [], [], [], [], [], []];
 		let topbufIndex = -1;
 
 		let count = 0;
@@ -841,7 +844,7 @@ abstract class BattleTypedSearch<T extends SearchType> {
 		if (table && table[tableKey]) {
 			table = table[tableKey];
 		}
-		if (!table) return pokemon.tier;
+		if (!table || tableKey == 'gen3') return pokemon.tier;
 
 		let id = pokemon.id;
 		if (id in table.overrideTier) {
@@ -1819,6 +1822,30 @@ class BattleTypeSearch extends BattleTypedSearch<'type'> {
 		throw new Error("invalid filter");
 	}
 	sort(results: SearchRow[], sortCol: string | null, reverseSort?: boolean): SearchRow[] {
+		throw new Error("invalid sortcol");
+	}
+}
+
+class BattleLocationSearch extends BattleTypedSearch<'location'> {
+	//sortRow: SearchRow = ['sortmove', ''];
+	getTable() {
+		return BattleLocationDex;
+	}
+	getDefaultResults(): SearchRow[] {
+		let results: SearchRow[] = [];
+		results.push(['header', "Locations"]);
+		for (let id in BattleLocationDex) {
+			if (!BattleLocationDex[id].hide) results.push(['location', id as ID]);
+		}
+		return results;
+	}
+	getBaseResults() {
+		return this.getDefaultResults();
+	}
+	filter(row: SearchRow, filters: string[][]): boolean {
+		throw new Error("invalid filter");
+	}
+	sort(results: SearchRow[], sortCol: string, reverseSort?: boolean): SearchRow[] {
 		throw new Error("invalid sortcol");
 	}
 }

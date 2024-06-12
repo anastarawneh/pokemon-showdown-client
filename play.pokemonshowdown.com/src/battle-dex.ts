@@ -170,8 +170,8 @@ interface TeambuilderSpriteData {
 }
 
 const Dex = new class implements ModdedDex {
-	readonly gen = 9;
-	readonly modid = 'gen9' as ID;
+	readonly gen = 3;
+	readonly modid = 'gen3' as ID;
 	readonly cache = null!;
 
 	readonly statNames: ReadonlyArray<StatName> = ['hp', 'atk', 'def', 'spa', 'spd', 'spe'];
@@ -194,7 +194,7 @@ const Dex = new class implements ModdedDex {
 	moddedDexes: {[mod: string]: ModdedDex} = {};
 
 	mod(modid: ID): ModdedDex {
-		if (modid === 'gen9') return this;
+		if (modid === 'gen3') return this;
 		if (!window.BattleTeambuilderTable) return this;
 		if (modid in this.moddedDexes) {
 			return this.moddedDexes[modid];
@@ -903,7 +903,7 @@ class ModdedDex {
 
 			let data = {...Dex.items.get(name)};
 
-			for (let i = this.gen; i < 9; i++) {
+			for (let i = this.gen; i < 3; i++) {
 				const table = window.BattleTeambuilderTable['gen' + i];
 				if (id in table.overrideItemDesc) {
 					data.shortDesc = table.overrideItemDesc[id];

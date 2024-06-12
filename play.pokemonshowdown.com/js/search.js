@@ -29,7 +29,7 @@
 		this.externalFilter = false;
 		this.cur = {};
 		this.$inputEl = null;
-		this.gen = 9;
+		this.gen = 3;
 		this.mod = null;
 
 		this.engine = new DexSearch();
@@ -197,16 +197,19 @@
 		case 'sortmove':
 			return this.renderMoveSortRow();
 		case 'pokemon':
-			var pokemon = this.engine.dex.species.get(id);
+			var pokemon = this.engine.dex.mod('gen3emeraldkaizo').species.get(id);
 			return this.renderPokemonRow(pokemon, matchStart, matchLength, errorMessage, attrs);
 		case 'move':
-			var move = this.engine.dex.moves.get(id);
+			var move = this.engine.dex.mod('gen3emeraldkaizo').moves.get(id);
 			return this.renderMoveRow(move, matchStart, matchLength, errorMessage, attrs);
+		case 'location':
+			var location = BattleLocationDex[id];
+			return this.renderLocationRow(location, matchStart, matchLength, errorMessage, attrs);
 		case 'item':
-			var item = this.engine.dex.items.get(id);
+			var item = this.engine.dex.mod('gen3emeraldkaizo').items.get(id);
 			return this.renderItemRow(item, matchStart, matchLength, errorMessage, attrs);
 		case 'ability':
-			var ability = this.engine.dex.abilities.get(id);
+			var ability = this.engine.dex.mod('gen3emeraldkaizo').abilities.get(id);
 			return this.renderAbilityRow(ability, matchStart, matchLength, errorMessage, attrs);
 		case 'type':
 			var type = {name: id[0].toUpperCase() + id.substr(1)};
@@ -228,7 +231,7 @@
 		case 'tier':
 			// very hardcode
 			var tierTable = {
-				uber: "Uber",
+				/*uber: "Uber",
 				ou: "OU",
 				uu: "UU",
 				ru: "RU",
@@ -244,7 +247,9 @@
 				rubl: "RUBL",
 				nubl: "NUBL",
 				publ: "PUBL",
-				zubl: "ZUBL"
+				zubl: "ZUBL"*/
+				legal: "Legal",
+				illegal: "Illegal"
 			};
 			var tier = {name: tierTable[id]};
 			return this.renderTierRow(tier, matchStart, matchLength, errorMessage);
@@ -332,7 +337,7 @@
 			return buf;
 		}
 
-		var gen = this.engine ? this.engine.dex.gen : 9;
+		var gen = this.engine ? this.engine.dex.gen : 3;
 
 		// type
 		buf += '<span class="col typecol">';
@@ -344,7 +349,7 @@
 
 		// abilities
 		if (gen >= 3) {
-			var abilities = Dex.forGen(gen).species.get(id).abilities;
+			var abilities = Dex.mod('gen3emeraldkaizo').species.get(id).abilities;
 			if (gen >= 5) {
 				if (abilities['1']) {
 					buf += '<span class="col twoabilitycol">' + abilities['0'] + '<br />' +
@@ -465,6 +470,88 @@
 
 		return buf;
 	};
+	Search.prototype.renderTaggedLocationPokemonRowInner = function (pokemon, tag, minLevel, maxLevel, errorMessage) {
+		var attrs = '';
+		if (Search.urlRoot) attrs = ' href="' + Search.urlRoot + 'pokemon/' + toID(pokemon.name) + '" data-target="push"';
+		var buf = '<a' + attrs + ' data-entry="pokemon|' + BattleLog.escapeHTML(pokemon.name) + '"' + (tag.endsWith('D') ? ' style="background:#ffc0c0;"' : '') + '>';
+
+		// tag
+		if (tag.endsWith('D')) tag = tag.slice(0, -1);
+		buf += '<span class="col tagcol shorttagcol">' + tag + '</span> ';
+
+		// icon
+		buf += '<span class="col iconcol">';
+		buf += '<span style="' + Dex.getPokemonIcon(pokemon.name) + '"></span>';
+		buf += '</span> ';
+
+		// name
+		var name = pokemon.name;
+		var tagStart = (pokemon.forme ? name.length - pokemon.forme.length - 1 : 0);
+		if (tagStart) name = name.substr(0, tagStart) + '<small>' + pokemon.name.substr(tagStart) + '</small>';
+		buf += '<span class="col shortpokemonnamecol">' + name + '</span> ';
+
+		// error
+		if (errorMessage) {
+			buf += errorMessage + '</a></li>';
+			return buf;
+		}
+
+		// type
+		buf += '<span class="col typecol">';
+		for (var i = 0; i < pokemon.types.length; i++) {
+			buf += Dex.getTypeIcon(pokemon.types[i]);
+		}
+		buf += '</span> ';
+
+		// levels
+		if (minLevel > maxLevel) {
+			buf += '<span class="col twoabilitycol">';
+			buf += 'Lv. ' + maxLevel;
+			buf += '<br />';
+			buf += 'Lv. ' + minLevel;
+			buf += '</span>';
+		} else {
+			buf += '<span class="col abilitycol">';
+			buf += 'Lv. ' + (minLevel == maxLevel ? minLevel : minLevel + '-' + maxLevel);
+			buf += '</span>';
+		}
+
+		// abilities
+		buf += '<span style="float:left;min-height:26px">';
+		if (pokemon.abilities['1']) {
+			buf += '<span class="col twoabilitycol">';
+		} else {
+			buf += '<span class="col abilitycol">';
+		}
+		for (var i in pokemon.abilities) {
+			var ability = pokemon.abilities[i];
+			if (!ability) continue;
+
+			if (i === '1') buf += '<br />';
+			//if (i === 'H') ability = '</span><span class="col abilitycol"><em>' + pokemon.abilities[i] + '</em>';
+			buf += ability;
+		}
+		//if (!pokemon.abilities['H']) buf += '</span><span class="col abilitycol">';
+		buf += '</span>';
+		buf += '</span>';
+
+		// base stats
+		buf += '<span style="float:left;min-height:26px">';
+		buf += '<span class="col statcol"><em>HP</em><br />' + pokemon.baseStats.hp + '</span> ';
+		buf += '<span class="col statcol"><em>Atk</em><br />' + pokemon.baseStats.atk + '</span> ';
+		buf += '<span class="col statcol"><em>Def</em><br />' + pokemon.baseStats.def + '</span> ';
+		buf += '<span class="col statcol"><em>SpA</em><br />' + pokemon.baseStats.spa + '</span> ';
+		buf += '<span class="col statcol"><em>SpD</em><br />' + pokemon.baseStats.spd + '</span> ';
+		buf += '<span class="col statcol"><em>Spe</em><br />' + pokemon.baseStats.spe + '</span> ';
+		var bst = 0;
+		for (i in pokemon.baseStats) bst += pokemon.baseStats[i];
+		buf += '<span class="col bstcol"><em>BST<br />' + bst + '</em></span> ';
+		buf += '</span>';
+
+		buf += '</a>';
+
+		return buf;
+	};
 
 	Search.prototype.renderItemRow = function (item, matchStart, matchLength, errorMessage, attrs) {
 		if (!attrs) attrs = '';
@@ -524,6 +611,67 @@
 
 		return buf;
 	};
+	Search.prototype.renderLocationRow = function (location, matchStart, matchLength, errorMessage, attrs) {
+		if (!attrs) attrs = '';
+		if (!location) return '<li class="result">Unrecognized location</li>';
+		var id = toID(location.name);
+		if (Search.urlRoot) attrs += ' href="' + Search.urlRoot + 'locations/' + id + '" data-target="push"';
+		var sets = JSON.parse(localStorage.encounters);
+		if (Object.keys(sets).includes(id) || location.mainlocation && Object.keys(sets).includes(location.mainlocation)) {
+			attrs += ' style="background:#ffc0c0;"'
+		}
+		var buf = '<li class="result"><a' + attrs + ' data-entry="location|' + BattleLog.escapeHTML(location.name) + '">';
+
+		// name
+		var name = location.name;
+		if (matchLength) {
+			name = name.substr(0, matchStart) + '<b>' + name.substr(matchStart, matchLength) + '</b>' + name.substr(matchStart + matchLength);
+		}
+		buf += '<span class="col locationnamecol">' + name + '</span><span class="col abilitycol">' + (!location.taken ? 'Available' : 'Unavailable') + '</span>';
+		if (location.taken) buf += '<span class="col abilitycol">' + location.taken + '</span>';
+		return buf;
+	};
+	Search.prototype.renderLocationRowInner = function (location, errorMessage, attrs) {
+		if (!attrs) attrs = '';
+		if (!location) return 'Unrecognized location';
+		var id = toID(location.name);
+		if (Search.urlRoot) attrs += ' href="' + Search.urlRoot + 'locations/' + id + '" data-target="push"';
+		var buf = '<a' + attrs + ' data-entry="location|' + BattleLog.escapeHTML(location.name) + '">';
+
+		// name
+		var name = location.name;
+		buf += '<span class="col locationnamecol">' + name + '</span><span class="col abilitycol">' + (!location.taken ? 'Available' : 'Unavailable') + '</span>';
+		if (location.taken) buf += '<span class="col abilitycol">' + location.taken + '</span>';
+		return buf;
+	};
+	Search.prototype.renderTaggedLocationRow = function (rawEncounter, tag, encounterType, errorMessage, attrs) {
+		if (!attrs) attrs = '';
+		var locationid = rawEncounter.split(' ')[0];
+		var encounter = rawEncounter.split(' ')[1];
+		var location = BattleLocationDex[locationid];
+		if (!location) return '<li class="result">Unrecognized location (' + locationid + ')</li>';
+		var id = toID(location.name);
+		if (Search.urlRoot) attrs += ' href="' + Search.urlRoot + 'locations/' + id + '" data-target="push"';
+		var buf = '<li class="result"><a' + attrs + ' data-entry="location|' + BattleLog.escapeHTML(location.name) + '">';
+
+		// name
+		var name = location.name;
+		
+		buf += '<span class="col tagcol shorttagcol">' + tag + '</span>';
+
+		var sprite = '/sprites/' + encounterType.toLowerCase() + '.png';
+		if (encounterType == "Fossil") {
+			var fossil = encounter.substr(10) === 'anorith' ? "claw" : "root";
+			sprite = '/sprites/' + encounterType.toLowerCase() + fossil + '.png';
+		}
+
+		buf += '<span class="col tagcol">' + '<img src="' + sprite + '" style="margin-top:-4px;opacity:.7" width="27" height="26" alt="-" />' + '</span>';
+
+		buf += '<span class="col movenamecol">' + name + '</span>';
+
+		buf += '</a></li>';
+		return buf;
+	};
 	Search.prototype.renderMoveRow = function (move, matchStart, matchLength, errorMessage, attrs) {
 		if (!attrs) attrs = '';
 		if (!move) return '<li class="result">Unrecognized move</li>';
@@ -564,7 +712,7 @@
 		buf += '</span> ';
 
 		// power, accuracy, pp
-		var pp = (move.pp === 1 || move.noPPBoosts ? move.pp : move.pp * 8 / 5);
+		var pp = move.pp; /*(move.pp === 1 || move.noPPBoosts ? move.pp : move.pp * 8 / 5);*/
 		if (this.engine && this.engine.dex.gen < 3) pp = Math.min(61, pp);
 		buf += '<span class="col labelcol">' + (move.category !== 'Status' ? ('<em>Power</em><br />' + (move.basePower || '&mdash;')) : '') + '</span> ';
 		buf += '<span class="col widelabelcol"><em>Accuracy</em><br />' + (move.accuracy && move.accuracy !== true ? move.accuracy + '%' : '&mdash;') + '</span> ';
@@ -642,7 +790,7 @@
 		// power, accuracy, pp
 		buf += '<span class="col labelcol">' + (move.category !== 'Status' ? ('<em>Power</em><br />' + (move.basePower || '&mdash;')) : '') + '</span> ';
 		buf += '<span class="col widelabelcol"><em>Accuracy</em><br />' + (move.accuracy && move.accuracy !== true ? move.accuracy + '%' : '&mdash;') + '</span> ';
-		buf += '<span class="col pplabelcol"><em>PP</em><br />' + (move.pp !== 1 ? move.pp * 8 / 5 : move.pp) + '</span> ';
+		buf += '<span class="col pplabelcol"><em>PP</em><br />' + move.pp + '</span> ';
 
 		// desc
 		buf += '<span class="col movedesccol">' + BattleLog.escapeHTML(move.shortDesc || move.desc) + '</span> ';
@@ -780,12 +928,16 @@
 		return buf;
 	};
 
-	Search.gen = 9;
+	Search.gen = 3;
 	Search.renderRow = Search.prototype.renderRow;
 	Search.renderPokemonRow = Search.prototype.renderPokemonRow;
 	Search.renderTaggedPokemonRowInner = Search.prototype.renderTaggedPokemonRowInner;
+	Search.renderTaggedLocationPokemonRowInner = Search.prototype.renderTaggedLocationPokemonRowInner;
 	Search.renderItemRow = Search.prototype.renderItemRow;
 	Search.renderAbilityRow = Search.prototype.renderAbilityRow;
+	Search.renderLocationRow = Search.prototype.renderLocationRow;
+	Search.renderLocationRowInner = Search.prototype.renderLocationRowInner;
+	Search.renderTaggedLocationRow = Search.prototype.renderTaggedLocationRow;
 	Search.renderMoveRow = Search.prototype.renderMoveRow;
 	Search.renderMoveRowInner = Search.prototype.renderMoveRowInner;
 	Search.renderTaggedMoveRow = Search.prototype.renderTaggedMoveRow;
