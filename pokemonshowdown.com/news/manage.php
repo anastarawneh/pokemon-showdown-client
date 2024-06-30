@@ -2,11 +2,11 @@
 
 error_reporting(E_ALL);
 
+use OTPHP\TOTP;
+
 include_once '../../lib/ntbb-session.lib.php';
 include_once __DIR__ . '/../../config/news.inc.php';
 include_once 'include.php';
-
-if (!$users->isLeader()) die('access denied');
 
 function saveNews() {
 	global $newsCache, $latestNewsCache;
@@ -46,13 +46,17 @@ includeHeader();
 			<input type="hidden" name="act" value="newentry" /><input type="hidden" name="topic_id" value="<?= @$topic_id ?>" /><?php $users->csrfData(); ?>
 			<input type="text" name="title" size="80" placeholder="Title" value="<?= htmlspecialchars(@$topic['title']) ?>" /><br /><br />
 			<textarea name="summary" cols="80" rows="10" placeholder="Summary"><?= htmlspecialchars(@$topic['summary']) ?></textarea>
-			<br /><button type="submit"><strong>Make New Post</strong></button>
+			<br /><br /><input type="text" name="authcode" size="15" placeholder="Authentication code" maxlength="6"></input>
+			<button type="submit"><strong>Make New Post</strong></button>
 		</form>
+<?php
+		$otp = TOTP::createFromSecret($psconfig['totp']);
+?>
 
 <?php
 
 	if (@$_POST['act'] === 'editentry') {
-		if (!$users->csrfCheck()) die('csrf error');
+		if (!$otp->verify($_POST['authcode'])) die('invalid code');
 		$topic_id = $_POST['topic_id'];
 		$title = $_POST['title'];
 
@@ -104,7 +108,7 @@ includeHeader();
 		echo '<p>Edit successful</p>';
 	}
 	if (@$_POST['act'] === 'newentry') {
-		if (!$users->csrfCheck()) die('csrf error');
+		if (!$otp->verify($_POST['authcode'])) die('invalid code');
 
 		$topic_id = intval($latestNewsCache[0]) + 1;
 
@@ -129,7 +133,7 @@ includeHeader();
 		$newsCache[$topic_id] = array(
 			'topic_id' => ''.$topic_id,
 			'title' => $title,
-			'authorname' => $curuser['username'],
+			'authorname' => 'anastarawneh',
 			'date' => $time,
 			'topic_time' => $time,
 			'summary' => $pre_summary,
@@ -138,7 +142,6 @@ includeHeader();
 		);
 
 		array_unshift($latestNewsCache, ''.$topic_id);
-
 		saveNews();
 		echo '<p>New post successful</p>';
 	}
@@ -160,7 +163,7 @@ includeHeader();
 <?php } else { ?>
 					<textarea name="details" cols="80" rows="10" placeholder="Details" style="display:none"></textarea><button onclick="$(this).prev().show();$(this).hide();return false">Add "read more" details</button>
 <?php } ?>
-					<br /><button type="submit"><strong>Make Edit</strong></button>
+					<br /><br /><input type="text" name="authcode" size="15" placeholder="Authentication code" maxlength="6"></input><button type="submit"><strong>Make Edit</strong></button>
 				</form>
 				<?php echo @$topic['summary_html'] ?>
 				<p>
