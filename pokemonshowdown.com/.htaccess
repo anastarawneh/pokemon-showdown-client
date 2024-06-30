@@ -66,6 +66,8 @@ RewriteRule ^damagecalc\/(.*)$ https://calc.pokemonshowdown.com/$1 [R=302,L,QSA]
 RewriteRule ^damagecalc$ https://calc.pokemonshowdown.com/ [R=302,L,QSA]
 RewriteRule ^pages/([a-z0-9-]+)/?$ /.pages-cached/$1.html [L,QSA]
 
+RewriteRule ^oauth$ oauth.php [L,QSA]
+
 # RewriteRule ^battle-([A-Za-z0-9-]+)?$ /replay/$1 [R=302,L]
 
 RewriteRule ^autodownload\/?([A-Za-z0-9-]+)?$ autodownload.php?os=$1 [L,QSA]

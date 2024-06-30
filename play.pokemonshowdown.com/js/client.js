@@ -361,7 +361,6 @@ function toId() {
 								app.topbar.updateUserbar();
 								return;
 							}
-							this.assertion = assertion;
 							const username = assertion.split(',')[1];
 							self.finishRename(username, assertion);
 						});
@@ -374,30 +373,16 @@ function toId() {
 			url.searchParams.append("redirect_uri", Config.redirect_uri);
 			url.searchParams.append("client_id", Config.client_id);
 			url.searchParams.append("challenge", this.challstr);
-			const popup = window.open(url, undefined, 'popup=1');
+			window.open(url);
 			const checkIfUpdated = () => {
 				try {
-					if (popup?.location?.href?.startsWith(Config.redirect_uri)) {
-						const url = new URL(popup.location.href);
-						const assertion = url.searchParams.get('assertion');
-						if (!assertion) {
-							console.error('Received no assertion');
-							return;
-						}
-
-					 	this.assertion = assertion;
+					var assertion = decodeURIComponent(document.cookie.split("; ").filter(x => x.startsWith("assertion="))[0]);
+					if (assertion) {
+						document.cookie = `assertion=; Max-Age=0; Domain=${Config.routes.root}; Path=/; Secure; SameSite=None`;
+					 	assertion = assertion.split("assertion=")[1];
 					 	const username = assertion.split(',')[1];
-
 						app.send("/trn " + username + ",0," + assertion);
 
-						const token = url.searchParams.get('token');
-						if (!token) {
-							console.error('Received no token')
-							return;
-						}
-						var sid = encodeURIComponent(`${username},,${token}`)
-						document.cookie = `sid=${sid}; Max-Age=604800; Domain=${Config.routes.root}; Path=/; Secure; SameSite=None`;
-						popup.close();
 					} else {
 						setTimeout(checkIfUpdated, 500);
 					}
