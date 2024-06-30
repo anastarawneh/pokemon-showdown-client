@@ -200,15 +200,6 @@ if (substr($replay['formatid'], -12) === 'randombattle' || substr($replay['forma
 <?php
 if ($panels->output === 'normal') {
 ?>
-<div><script>
-google_ad_client = "ca-pub-6535472412829264";
-/* PS replay */
-google_ad_slot = "6865298132";
-google_ad_width = 728;
-google_ad_height = 90;
-</script>
-<script src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script>
-</div>
 <?php
 }
 ?>
