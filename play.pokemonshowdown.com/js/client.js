@@ -396,7 +396,7 @@ function toId() {
 							return;
 						}
 						var sid = encodeURIComponent(`${username},,${token}`)
-						document.cookie = `sid=${sid}; Max-Age=604800; Domain=fakemons.localhost; Path=/; Secure; SameSite=None`;
+						document.cookie = `sid=${sid}; Max-Age=604800; Domain=${Config.routes.root}; Path=/; Secure; SameSite=None`;
 						popup.close();
 					} else {
 						setTimeout(checkIfUpdated, 500);
@@ -411,7 +411,7 @@ function toId() {
 		 * Log out from the server (but remain connected as a guest).
 		 */
 		logout: function () {
-			document.cookie = `sid=; Max-Age=0; Domain=fakemons.localhost; Path=/`;
+			document.cookie = `sid=; Max-Age=0; Domain=${Config.routes.root}; Path=/`;
 			app.send('/logout');
 			app.trigger('init:socketclosed', "You have been logged out and disconnected.", false);
 			app.socket.close();
