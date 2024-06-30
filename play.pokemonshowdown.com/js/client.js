@@ -341,39 +341,79 @@ function toId() {
 				 */
 				this.challstr = challstr;
 				var self = this;
-				$.post(this.getActionPHP(), {
-					act: 'upkeep',
-					challstr: this.challstr
-				}, Storage.safeJSON(function (data) {
-					self.loaded = true;
-					if (!data.username) {
-						app.topbar.updateUserbar();
-						return;
-					}
+				this.loaded = true;
+				const getAssertion = async (url) => {
+					return fetch(url)
+						.then(response => response.text());
+				};
+				var sid = decodeURIComponent(document.cookie).split("; ").filter(x => x.startsWith("sid="))[0];
+				if (sid) {
+					sid = sid.split("=")[1].split(",")
+					const url = new URL("https://play.pokemonshowdown.com/api/oauth/api/getassertion");
+					url.searchParams.append("challenge", app.user.challstr);
+					url.searchParams.append("client_id", Config.client_id);
+					url.searchParams.append("token", sid[2]);
 
-					// | , ; are not valid characters in names
-					data.username = data.username.replace(/[\|,;]+/g, '');
-
-					if (data.loggedin) {
-						self.set('registered', {
-							username: data.username,
-							userid: toUserid(data.username)
+					getAssertion(url)
+						.then(assertion => {
+							if (assertion == ']{"success":false}') {
+								// TODO: try refreshing the token if it's invalid
+								app.topbar.updateUserbar();
+								return;
+							}
+							this.assertion = assertion;
+							const username = assertion.split(',')[1];
+							self.finishRename(username, assertion);
 						});
-					}
-					self.finishRename(data.username, data.assertion);
-				}), 'text');
+				}
+				app.topbar.updateUserbar();
 			}
+		},
+		login: function () {
+			const url = new URL("https://play.pokemonshowdown.com/api/oauth/authorize");
+			url.searchParams.append("redirect_uri", Config.redirect_uri);
+			url.searchParams.append("client_id", Config.client_id);
+			url.searchParams.append("challenge", this.challstr);
+			const popup = window.open(url, undefined, 'popup=1');
+			const checkIfUpdated = () => {
+				try {
+					if (popup?.location?.href?.startsWith(Config.redirect_uri)) {
+						const url = new URL(popup.location.href);
+						const assertion = url.searchParams.get('assertion');
+						if (!assertion) {
+							console.error('Received no assertion');
+							return;
+						}
+
+					 	this.assertion = assertion;
+					 	const username = assertion.split(',')[1];
+
+						app.send("/trn " + username + ",0," + assertion);
+
+						const token = url.searchParams.get('token');
+						if (!token) {
+							console.error('Received no token')
+							return;
+						}
+						var sid = encodeURIComponent(`${username},,${token}`)
+						document.cookie = `sid=${sid}; Max-Age=604800; Domain=fakemons.localhost; Path=/; Secure; SameSite=None`;
+						popup.close();
+					} else {
+						setTimeout(checkIfUpdated, 500);
+					}
+				} catch (DOMException) {
+					setTimeout(checkIfUpdated, 500);
+				}
+			};
+			checkIfUpdated();
 		},
 		/**
 		 * Log out from the server (but remain connected as a guest).
 		 */
 		logout: function () {
-			$.post(this.getActionPHP(), {
-				act: 'logout',
-				userid: this.get('userid')
-			});
+			document.cookie = `sid=; Max-Age=0; Domain=fakemons.localhost; Path=/`;
 			app.send('/logout');
-			app.trigger('init:socketclosed', "You have been logged out and disconnected.<br /><br />If you wanted to change your name while staying connected, use the 'Change Name' button or the '/nick' command.", false);
+			app.trigger('init:socketclosed', "You have been logged out and disconnected.", false);
 			app.socket.close();
 		},
 		setPersistentName: function (name) {
@@ -556,12 +596,7 @@ function toId() {
 			});
 
 			this.on('loggedin', function () {
-				Storage.loadRemoteTeams(function () {
-					if (app.rooms.teambuilder) {
-						// if they have it open, be sure to update so it doesn't show 'no teams'
-						app.rooms.teambuilder.update();
-					}
-				});
+				
 			});
 
 			this.on('response:savereplay', this.uploadReplay, this);
@@ -2813,7 +2848,7 @@ function toId() {
 				if (userid === app.user.get('userid')) {
 					buf += ' <button name="pm" class="button">Chat self</button>';
 					buf += '</p><hr /><p class="buttonbar" style="text-align: right">';
-					buf += '<button name="login" class="button"><i class="fa fa-pencil"></i> Change name</button> <button name="logout" class="button"><i class="fa fa-power-off"></i> Log out</button>';
+					buf += '<button name="logout" class="button"><i class="fa fa-power-off"></i> Log out</button>';
 				} else {
 					// Guests can't PM themselves
 					buf += ' <button disabled class="button">Chat self</button>';

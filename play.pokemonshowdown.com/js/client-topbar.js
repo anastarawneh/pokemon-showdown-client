@@ -38,13 +38,13 @@
 			} else if (app.user.get('named')) {
 				buf = '<span class="username" data-name="' + BattleLog.escapeHTML(name) + '"' + (away ? ' data-away="true"' : '') + (status ? 'data-status="' + BattleLog.escapeHTML(status) + '"' : '') + ' style="' + color + '"><i class="fa fa-user" style="color:' + (away ? '#888;' : '#779EC5') + '"></i> <span class="usernametext">' + BattleLog.escapeHTML(name) + '</span></span>';
 			} else {
-				buf = '<button name="login" class="button">Choose name</button>';
+				buf = '<button name="login" class="button">Login</button>';
 			}
 			buf += ' <button class="icon button" name="openSounds" title="Sound" aria-label="Sound"><i class="' + (Dex.prefs('mute') ? 'fa fa-volume-off' : 'fa fa-volume-up') + '"></i></button> <button class="icon button" name="openOptions" title="Options" aria-label="Options"><i class="fa fa-cog"></i></button>';
 			this.$userbar.html(buf);
 		},
 		login: function () {
-			app.addPopup(LoginPopup);
+			app.user.login();
 		},
 		openSounds: function () {
 			app.addPopup(SoundsPopup);
@@ -479,14 +479,6 @@
 			var buf = '';
 			buf += '<p>' + (avatar ? '<img class="trainersprite" src="' + Dex.resolveAvatar(avatar) + '" width="40" height="40" style="vertical-align:middle;cursor:pointer" />' : '') + '<strong>' + BattleLog.escapeHTML(name) + '</strong></p>';
 			buf += '<p><button class="button" name="avatars">Avatar...</button></p>';
-			if (app.user.get('named')) {
-				var registered = app.user.get('registered');
-				if (registered && (registered.userid === app.user.get('userid'))) {
-					buf += '<p><button class="button" name="changepassword">Password...</button></p>';
-				} else {
-					buf += '<p><button class="button" name="register">Register</button></p>';
-				}
-			}
 
 			buf += '<hr />';
 			buf += '<p><strong>Graphics</strong></p>';
@@ -560,9 +552,9 @@
 
 			buf += '<hr />';
 			if (app.user.get('named')) {
-				buf += '<p class="buttonbar" style="text-align:right"><button name="login" class="button"><i class="fa fa-pencil"></i> Change name</button> <button name="logout" class="button"><i class="fa fa-power-off"></i> Log out</button></p>';
+				buf += '<p class="buttonbar" style="text-align:right"><button name="logout" class="button"><i class="fa fa-power-off"></i> Log out</button></p>';
 			} else {
-				buf += '<p class="buttonbar" style="text-align:right"><button name="login" class="button">Choose name</button></p>';
+				buf += '<p class="buttonbar" style="text-align:right"><button name="login" class="button">Login</button></p>';
 			}
 			this.$el.html(buf).css('min-width', 160);
 		},
@@ -666,7 +658,7 @@
 			app.addPopup(FormattingPopup);
 		},
 		login: function () {
-			app.addPopup(LoginPopup);
+			app.user.login();
 		},
 		register: function () {
 			app.addPopup(RegisterPopup);
