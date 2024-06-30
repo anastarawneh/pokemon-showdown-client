@@ -13,8 +13,8 @@ if (!isset($_COOKIE['sid'])) {
 		$assertion = $_GET['assertion'];
 		$token = $_GET['token'];
 		$username = explode(',', $assertion)[1];
-		header('Set-Cookie: sid='.$username.',,'.$token.'; Domain=fakemons.localhost; Max-Age=604800; Path=/; Secure; SameSite=None');
-		header('Set-Cookie: assertion='.urlencode($assertion).'; Domain=fakemons.localhost; Max-Age=604800; Path=/; Secure; SameSite=None', false);
+		header('Set-Cookie: sid='.$username.',,'.$token.'; Domain=fakemons.anastarawneh.com; Max-Age=604800; Path=/; Secure; SameSite=None');
+		header('Set-Cookie: assertion='.urlencode($assertion).'; Domain=fakemons.anastarawneh.com; Max-Age=604800; Path=/; Secure; SameSite=None', false);
 		?>
 			<div class="main">
 				<h1>You have been successfully authenticated.</h1>
