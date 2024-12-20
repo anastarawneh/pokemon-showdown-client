@@ -64,7 +64,7 @@ class DexSearch {
 		egggroup: 'Egg group',
 		category: 'Category',
 		article: 'Article',
-		location: 'Location',
+		location: 'Locations',
 	};
 	firstPokemonColumn: 'Tier' | 'Number' = 'Number';
 
