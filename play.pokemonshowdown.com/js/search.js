@@ -627,8 +627,9 @@
 		if (matchLength) {
 			name = name.substr(0, matchStart) + '<b>' + name.substr(matchStart, matchLength) + '</b>' + name.substr(matchStart + matchLength);
 		}
-		buf += '<span class="col locationnamecol">' + name + '</span><span class="col abilitycol">' + (!location.taken ? 'Available' : 'Unavailable') + '</span>';
-		if (location.taken) buf += '<span class="col abilitycol">' + location.taken + '</span>';
+		var taken = location.mainlocation ? BattleLocationDex[location.mainlocation].taken : location.taken;
+		buf += '<span class="col locationnamecol">' + name + '</span><span class="col abilitycol">' + (!taken ? 'Available' : 'Unavailable') + '</span>';
+		if (taken) buf += '<span class="col abilitycol">' + taken + '</span>';
 		return buf;
 	};
 	Search.prototype.renderLocationRowInner = function (location, errorMessage, attrs) {
