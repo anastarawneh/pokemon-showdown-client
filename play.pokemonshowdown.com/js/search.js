@@ -470,7 +470,7 @@
 
 		return buf;
 	};
-	Search.prototype.renderTaggedLocationPokemonRowInner = function (pokemon, tag, minLevel, maxLevel, errorMessage) {
+	Search.prototype.renderTaggedLocationPokemonRowInner = function (pokemon, tag, minLevel, maxLevel, warnings, errorMessage) {
 		var attrs = '';
 		if (Search.urlRoot) attrs = ' href="' + Search.urlRoot + 'pokemon/' + toID(pokemon.name) + '" data-target="push"';
 		var buf = '<a' + attrs + ' data-entry="pokemon|' + BattleLog.escapeHTML(pokemon.name) + '"' + (tag.endsWith('D') ? ' style="background:#ffc0c0;"' : '') + '>';
@@ -516,37 +516,11 @@
 			buf += '</span>';
 		}
 
-		// abilities
-		buf += '<span style="float:left;min-height:26px">';
-		if (pokemon.abilities['1']) {
-			buf += '<span class="col twoabilitycol">';
-		} else {
-			buf += '<span class="col abilitycol">';
+		// warnings
+		if (warnings.length) {
+			buf += '<span class="col locationwarningcol">(' + warnings.join(", ") + ')</span>';
 		}
-		for (var i in pokemon.abilities) {
-			var ability = pokemon.abilities[i];
-			if (!ability) continue;
-
-			if (i === '1') buf += '<br />';
-			//if (i === 'H') ability = '</span><span class="col abilitycol"><em>' + pokemon.abilities[i] + '</em>';
-			buf += ability;
-		}
-		//if (!pokemon.abilities['H']) buf += '</span><span class="col abilitycol">';
-		buf += '</span>';
-		buf += '</span>';
-
-		// base stats
-		buf += '<span style="float:left;min-height:26px">';
-		buf += '<span class="col statcol"><em>HP</em><br />' + pokemon.baseStats.hp + '</span> ';
-		buf += '<span class="col statcol"><em>Atk</em><br />' + pokemon.baseStats.atk + '</span> ';
-		buf += '<span class="col statcol"><em>Def</em><br />' + pokemon.baseStats.def + '</span> ';
-		buf += '<span class="col statcol"><em>SpA</em><br />' + pokemon.baseStats.spa + '</span> ';
-		buf += '<span class="col statcol"><em>SpD</em><br />' + pokemon.baseStats.spd + '</span> ';
-		buf += '<span class="col statcol"><em>Spe</em><br />' + pokemon.baseStats.spe + '</span> ';
-		var bst = 0;
-		for (i in pokemon.baseStats) bst += pokemon.baseStats[i];
-		buf += '<span class="col bstcol"><em>BST<br />' + bst + '</em></span> ';
-		buf += '</span>';
+		
 
 		buf += '</a>';
 
@@ -645,7 +619,7 @@
 		if (location.taken) buf += '<span class="col abilitycol">' + location.taken + '</span>';
 		return buf;
 	};
-	Search.prototype.renderTaggedLocationRow = function (rawEncounter, tag, encounterType, errorMessage, attrs) {
+	Search.prototype.renderTaggedLocationRow = function (rawEncounter, tag, encounterType, level, warnings, errorMessage, attrs) {
 		if (!attrs) attrs = '';
 		var locationid = rawEncounter.split(' ')[0];
 		var encounter = rawEncounter.split(' ')[1];
@@ -668,7 +642,13 @@
 
 		buf += '<span class="col tagcol">' + '<img src="' + sprite + '" style="margin-top:-4px;opacity:.7" width="27" height="26" alt="-" />' + '</span>';
 
-		buf += '<span class="col movenamecol">' + name + '</span>';
+		buf += '<span class="col locationnamecol">' + name + '</span>';
+
+		buf += '<span class="col abilitycol">' + level + '</span>';
+
+		if (warnings.length) {
+			buf += '<span class="col locationwarningcol">(' + warnings.join(", ") + ')</span>';
+		}
 
 		buf += '</a></li>';
 		return buf;
